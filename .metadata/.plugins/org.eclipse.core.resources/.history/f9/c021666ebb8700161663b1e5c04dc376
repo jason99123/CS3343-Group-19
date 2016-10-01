@@ -1,0 +1,9 @@
+
+public class BasePrice {
+
+	public float getBasePrice() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

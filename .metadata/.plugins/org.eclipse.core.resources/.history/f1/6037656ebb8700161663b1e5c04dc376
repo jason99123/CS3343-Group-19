@@ -1,0 +1,18 @@
+
+public class fee {
+
+	public static void main(String[] args) {
+		float price;
+		
+		try {
+			//call for the formula
+			price = BasePrice.getBasePrice();
+			System.out.println("The price is: "+price);
+		}
+		finally {
+			System.out.println("Process Completed.");
+		}
+	}
+
+
+}
