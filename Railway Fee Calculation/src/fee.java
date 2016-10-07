@@ -17,7 +17,7 @@ public class fee {
 		float price;
 		PriceCalculator Calculator=PriceCalculator.getInstance();
 		
-		System.out.println(System.getProperty("user.dir"));
+		Calculator.readData();
 		price = Calculator.getBasePrice();
 		return price;
 	}
