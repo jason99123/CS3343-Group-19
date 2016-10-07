@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class PriceCalculator {
 	
-	private static PriceCalculator instance=new PriceCalculator();
-	private ArrayList<Station>StationList = new ArrayList<>();
+	private static PriceCalculator instance = new PriceCalculator();
+	private List<Station> stationList = new ArrayList<>();
 	
 	private PriceCalculator(){
 		readData();
@@ -18,26 +18,26 @@ public class PriceCalculator {
 		return instance;
 	}
 	
-	public float getBasePrice(String start,String dest) {
+	public float getBasePrice(String start, String dest) {
 		
-		int countS=0;
-		int countD=0;
+		int countS = 0;
+		int countD = 0;
 		
-		for(Station s:StationList){
+		for(Station s: stationList){
 			countS++;
 			if(s.getString().equals(start)){
 				break;
 			}
 		}
 		
-		for(Station s:StationList){
+		for(Station s: stationList){
 			countD++;
 			if(s.getString().equals(dest)){
 				break;
 			}
 		}
 		
-		System.out.println("Distances:"+ (countD-countS) +" staions");
+		System.out.println("Distances:" + (countD - countS) + " stations");
 
 		return 1;
 	}
@@ -47,16 +47,16 @@ public class PriceCalculator {
 	@SuppressWarnings("resource")
 	public void readData(){ //read csv data
 		try {
-			BufferedReader reader= new BufferedReader(new FileReader("data/StationList.csv")); //import csv file
+			BufferedReader reader = new BufferedReader(new FileReader("data/StationList.csv")); //import csv file
 			
-			String row=null; //no line is read at first
+			String row = null; //no line is read at first
 			
-			while((row=reader.readLine())!=null){
+			while((row = reader.readLine()) != null){
 				
-				String data[]=row.split(","); //split columns in each rows
+				String data[] = row.split(","); //split columns in each rows
 				
-				Station newStation= new Station(data[0]);
-				StationList.add(newStation);
+				Station newStation = new Station(data[0]);
+				stationList.add(newStation);
 				
 			}
 		} catch (FileNotFoundException e) {
@@ -66,8 +66,7 @@ public class PriceCalculator {
 			// TODO Auto-generated catch block (need to edit it later)
 			e.printStackTrace();
 		}
-		
-		
+			
 	}
 
 }
