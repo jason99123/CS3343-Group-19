@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class fee {
 
@@ -5,20 +6,28 @@ public class fee {
 		
 		try {
 			//call for the formula
+			Scanner input=new Scanner(System.in);
+			String start;
+			String dest;
+			
+			System.out.println("Please input Starting Station: ");
+			start=input.nextLine();
+			
+			System.out.println("Please input Destination Station: ");
+			dest=input.nextLine();
 
-			System.out.println("The price is: $"+finalCalculation());
+			System.out.println("The price is: $"+finalCalculation(start,dest));
 		}
 		finally {
 			System.out.println("Process Completed.");
 		}
 	}
 
-	private static float finalCalculation() {
+	private static float finalCalculation(String start,String dest) {
 		float price;
 		PriceCalculator Calculator=PriceCalculator.getInstance();
 		
-		Calculator.readData();
-		price = Calculator.getBasePrice();
+		price = Calculator.getBasePrice(start,dest);
 		return price;
 	}
 

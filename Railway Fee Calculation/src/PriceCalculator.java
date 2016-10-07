@@ -3,24 +3,49 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PriceCalculator {
 	
 	private static PriceCalculator instance=new PriceCalculator();
+	private ArrayList<Station>StationList = new ArrayList<>();
 	
-	private PriceCalculator(){}
+	private PriceCalculator(){
+		readData();
+	}
 	
 	public static PriceCalculator getInstance(){
 		return instance;
 	}
 	
-	public float getBasePrice() {
+	public float getBasePrice(String start,String dest) {
 		
+		int countS=0;
+		int countD=0;
+		
+		for(Station s:StationList){
+			countS++;
+			if(s.getString().equals(start)){
+				break;
+			}
+		}
+		
+		for(Station s:StationList){
+			countD++;
+			if(s.getString().equals(dest)){
+				break;
+			}
+		}
+		
+		System.out.println("Distances:"+ (countD-countS) +" staions");
+
 		return 1;
 	}
 	
+	
+	
 	@SuppressWarnings("resource")
-	public void readData(){
+	public void readData(){ //read csv data
 		try {
 			BufferedReader reader= new BufferedReader(new FileReader("data/StationList.csv")); //import csv file
 			
@@ -30,11 +55,9 @@ public class PriceCalculator {
 				
 				String data[]=row.split(","); //split columns in each rows
 				
-				for(String s:data){
-					System.out.print(s); //test code for data reading
-				}
+				Station newStation= new Station(data[0]);
+				StationList.add(newStation);
 				
-				System.out.println(); //test code for data reading
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block (need to edit it later)
