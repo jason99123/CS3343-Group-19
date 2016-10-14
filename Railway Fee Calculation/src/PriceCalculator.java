@@ -37,9 +37,16 @@ public class PriceCalculator {
 			}
 		}
 		
-		System.out.println("Distances:"+ (countD-countS) +" staions");
-
-		return 1;
+		if((countD-countS)<=3){
+			return 3;
+		}else if((countD-countS)<=6 && (countD-countS)>3 ){
+			return 6;
+		}else if((countD-countS)<=9 && (countD-countS)>6 ){
+			return 9;
+		}else if((countD-countS)<=12 && (countD-countS)>9){
+			return 12;
+		}
+			return -1;
 	}
 	
 	
