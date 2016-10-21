@@ -7,6 +7,9 @@ public class fee {
 	private static int dest;
 	private static int quantity;
 	private static int method;
+	// Added by Ben on 14/10
+	private static int isSecond;
+	
 	public static void main(String[] args) {
 		
 		try {
@@ -21,6 +24,9 @@ public class fee {
 			System.out.println("Please input Destination Station: ");
 			dest=input.nextInt();
 			
+			System.out.println("Please choose whether it is second trip: ");
+			isSecond = input.nextInt();
+			
 			quantity = askForQuantity(input);
 			
 			method = askForMethod(input);
@@ -29,6 +35,64 @@ public class fee {
 		}
 		finally {
 			System.out.println("Process Completed.");
+		}
+	}
+	
+	// Added by Ben on 14/10/2016
+	private static float finalCalculation(int start, int dest)
+	{
+		class Record_Stub
+		{
+			public boolean recordExist(String s)
+			{
+				if("123".equalsIgnoreCase(s))
+					return true;
+				return false;
+			}
+		}
+		
+		Record_Stub rst = new Record_Stub();
+		
+		PriceCalculator pc = PriceCalculator.getInstance();
+		pc.readData();
+		// Need to translate the int to string
+		float basePrice = pc.getBasePrice("HKU", "Chai Wan");
+		
+		
+		// Octopus
+		if(method == 1)
+		{
+			// Elderly
+			if(ageGroup == 4)
+			{
+				float discount = (float) (basePrice*0.1);
+				return (rst.recordExist("123"))?2-discount:2;
+			}
+			
+			// Student / Child
+			else if(ageGroup == 1 || ageGroup == 2 )
+			{
+				float discount = (float) (basePrice/2*0.1);
+				System.out.println("Discount=" + discount);
+				System.out.println("BasePrice=" + basePrice);
+				return (rst.recordExist("123"))?basePrice/2-discount:basePrice/2;
+			}
+			
+			else
+			{
+				float discount = (float) (basePrice*0.1);
+				return (rst.recordExist("123"))?basePrice-discount:basePrice;
+			}		
+		}
+		
+		else
+		{
+			if(ageGroup == 4 || ageGroup == 1)
+			{
+				return basePrice/2;
+			}
+			
+			return basePrice;
 		}
 	}
 
