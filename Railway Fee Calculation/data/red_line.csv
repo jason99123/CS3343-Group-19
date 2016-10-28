@@ -1,0 +1,17 @@
+StationID,StationName,Distance,Interchange
+,Tsuen Wan,0,N
+,Tai Wo Hau,0.806,N
+,Kwai Hing,1.06,N
+,Kwai Fong,0.79,N
+,Lai King,0.933,N
+,Mei Foo,1.58,N
+,Lai Chi Kok,1.22,N
+,Cheung Sha Wan,0.86,N
+,Sham Shui Po,0.744,N
+,Prince Edward,0.943,Y
+,Mong Kok,0.638,Y
+,Yau Ma Tei,0.689,Y
+,Jordan,1.02,N
+,Tsim Sha Tsui,0.741,N
+,Admiralty,2.17,Y
+,Central,0.751,Y
