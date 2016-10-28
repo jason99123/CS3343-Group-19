@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class fee {
@@ -12,11 +14,13 @@ public class fee {
 	
 	public static void main(String[] args) {
 		
+		
 		try {
 			//call for the formula
 			Scanner input=new Scanner(System.in);
 			
 			ageGroup = askForAgeGroup(input);
+			 
 			
 			System.out.println("Please input Starting Station: ");
 			start = input.nextInt();

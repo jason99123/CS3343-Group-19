@@ -25,14 +25,14 @@ public class PriceCalculator {
 		
 		for(Station s:StationList){
 			countS++;
-			if(s.getString().equals(start)){
+			if(s.getStation().equals(start)){
 				break;
 			}
 		}
 		
 		for(Station s:StationList){
 			countD++;
-			if(s.getString().equals(dest)){
+			if(s.getStation().equals(dest)){
 				break;
 			}
 		}

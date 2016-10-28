@@ -1,13 +1,14 @@
+import java.util.Map;
 
 public class Station{
 	
-	private String name;
+	private String station;
 	
-	public Station(String _name){
-		name=_name;
+	public Station(String input){
+		this.station=input;
 	}
 	
-	public String getString(){
-		return name;
+	public String getStation(){
+		return station;
 	}
 }
