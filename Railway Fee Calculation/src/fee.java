@@ -14,14 +14,14 @@ public class fee {
 	
 	public static void main(String[] args) {
 		
-		
+		PriceCalculator Calculator=PriceCalculator.getInstance();
 		try {
 			//call for the formula
 			Scanner input=new Scanner(System.in);
 			
 			ageGroup = askForAgeGroup(input);
 			 
-			
+			Calculator.readData();
 			System.out.println("Please input Starting Station: ");
 			start = input.nextInt();
 			
@@ -35,15 +35,15 @@ public class fee {
 			
 			method = askForMethod(input);
 
-			System.out.println("The price is: $"+finalCalculation(start,dest));
+			System.out.println("The price is: $"+finalCalculation(start,dest, Calculator));
 		}
 		finally {
 			System.out.println("Process Completed.");
 		}
 	}
-	
+/*
 	// Added by Ben on 14/10/2016
-	private static float finalCalculation(int start, int dest)
+	private static float finalCalculation(int start, int dest, PriceCalculator calculator)
 	{
 		class Record_Stub
 		{
@@ -99,7 +99,7 @@ public class fee {
 			return basePrice;
 		}
 	}
-
+*/
 	private static int askForMethod(Scanner input) {
 		int method;
 		System.out.println("Please choose your payment method");
@@ -148,9 +148,9 @@ public class fee {
 		return group;
 	}
 
-	private static float finalCalculation(String start,String dest) {
+	private static float finalCalculation(int start,int dest, PriceCalculator Calculator) {
 		float price;
-		PriceCalculator Calculator=PriceCalculator.getInstance();
+		
 		
 		price = Calculator.getBasePrice(start,dest);
 		return price;

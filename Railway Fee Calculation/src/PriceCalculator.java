@@ -18,21 +18,21 @@ public class PriceCalculator {
 		return instance;
 	}
 	
-	public float getBasePrice(String start,String dest) {
+	public float getBasePrice(int start2,int dest2) {
 		
 		int countS=0;
 		int countD=0;
 		
 		for(Station s:StationList){
 			countS++;
-			if(s.getStation().equals(start)){
+			if(s.getStation().equals(start2)){
 				break;
 			}
 		}
 		
 		for(Station s:StationList){
 			countD++;
-			if(s.getStation().equals(dest)){
+			if(s.getStation().equals(dest2)){
 				break;
 			}
 		}
