@@ -21,11 +21,14 @@ public class fee {
 			
 			ageGroup = askForAgeGroup(input);
 			 
-			Calculator.readData();
+			
 			System.out.println("Please input Starting Station: ");
+			Calculator.outputAllStation();
 			start = input.nextInt();
 			
+			
 			System.out.println("Please input Destination Station: ");
+			Calculator.outputAllStation();
 			dest=input.nextInt();
 			
 			System.out.println("Please choose whether it is second trip: ");

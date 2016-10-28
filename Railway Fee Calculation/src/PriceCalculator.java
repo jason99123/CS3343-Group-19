@@ -11,7 +11,7 @@ public class PriceCalculator {
 	private ArrayList<Station>StationList = new ArrayList<>();
 	
 	private PriceCalculator(){
-		readData();
+		readallStation();
 	}
 	
 	public static PriceCalculator getInstance(){
@@ -52,7 +52,7 @@ public class PriceCalculator {
 	
 	
 	@SuppressWarnings("resource")
-	public void readData(){ //read csv data
+	public void readallStation(){ //read csv data
 		try {
 			BufferedReader reader= new BufferedReader(new FileReader("data/StationList.csv")); //import csv file
 			
@@ -62,7 +62,7 @@ public class PriceCalculator {
 				
 				String data[]=row.split(","); //split columns in each rows
 				
-				Station newStation= new Station(data[0]);
+				Station newStation= new Station(data[0],data[1]);
 				StationList.add(newStation);
 				
 			}
@@ -74,6 +74,15 @@ public class PriceCalculator {
 			e.printStackTrace();
 		}
 		
+		
+	}
+
+	public void outputAllStation() {
+		System.out.printf("%10s%15s\n", "Code", "Station");
+		for (Station station: StationList){
+			System.out.printf("%10s%15s\n", station.getCode(), station.getStation());
+			
+		}
 		
 	}
 
