@@ -49,6 +49,21 @@ public class PriceCalculator {
 			return -1;
 	}
 	
+	public double getDiscountFromAge(int ageGroup){
+		if(ageGroup == 1 || ageGroup ==2)
+			return 0.5;
+		else if (ageGroup == 4)
+			return 0.2;
+		else
+			return 1;
+	}
+	
+	public boolean octopusCechker(int method){
+		if (method == 1)
+			return true;
+		else 
+			return false;
+	}
 	
 	
 	@SuppressWarnings("resource")
@@ -62,7 +77,7 @@ public class PriceCalculator {
 				
 				String data[]=row.split(","); //split columns in each rows
 				
-				Station newStation= new Station(data[0],data[1]);
+				Station newStation= new Station(data[0],data[1],data[2]);
 				StationList.add(newStation);
 				
 			}
@@ -77,6 +92,27 @@ public class PriceCalculator {
 		
 	}
 
+
+	public double stationDistance(int start,int dest){
+		Station startStation=null;
+		Station destStation = null;
+		double totalDistance = 0;
+		for(Station e:StationList){
+			if(e.getCode()==start)
+				startStation = e;
+			if(e.getCode()==dest)
+				destStation=e;
+		}
+		for(int i = startStation.getCode();i<=destStation.getCode();i++){
+			Station temp=StationList.get(i);
+			if(i==start)
+				continue;
+			else
+			totalDistance += temp.getDistance();
+			}
+		return totalDistance;
+	}
+	
 	public void outputAllStation() {
 		System.out.printf("%10s%15s\n", "Code", "Station");
 		for (Station station: StationList){
@@ -84,6 +120,30 @@ public class PriceCalculator {
 			
 		}
 		
+	}
+
+	public double finalCalculation(int ageGroup,int quantity,int octopusMethod,int startStation,int destStation){
+		double finalPrice=0;
+		double ageGroupDiscount;
+		double totalDistance;
+		ageGroupDiscount=getDiscountFromAge(ageGroup);
+		totalDistance=stationDistance(startStation,destStation);
+		double pricePerKM = 0;
+		
+		if(totalDistance<3 && totalDistance>0)
+			pricePerKM = 20;
+		else if(totalDistance > 3)
+			pricePerKM = 10;
+		else if(totalDistance == 0)
+			return 10;
+		
+		if(octopusCechker(octopusMethod)){
+			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * 1;  
+		}
+		else
+			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * quantity;  
+
+		return finalPrice;
 	}
 
 }

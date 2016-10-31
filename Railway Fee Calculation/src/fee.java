@@ -38,7 +38,9 @@ public class fee {
 			
 			method = askForMethod(input);
 
-			System.out.println("The price is: $"+finalCalculation(start,dest, Calculator));
+
+			System.out.println("The price is: $"+Calculator.finalCalculation(ageGroup, quantity, method, start, dest));
+			//System.out.println("The price is: $"+finalCalculation(start,dest, Calculator));
 		}
 		finally {
 			System.out.println("Process Completed.");
