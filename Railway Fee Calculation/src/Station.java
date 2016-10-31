@@ -1,13 +1,20 @@
+import java.util.Map;
 
 public class Station{
 	
-	private String name;
+	private String station;
+	private int code;
 	
-	public Station(String _name){
-		name=_name;
+	public Station(String _code, String name){
+		this.station=name;
+		this.code = Integer.parseInt(_code);
 	}
 	
-	public String getString(){
-		return name;
+	public String getStation(){
+		return station;
+	}
+	
+	public int getCode(){
+		return code;
 	}
 }
