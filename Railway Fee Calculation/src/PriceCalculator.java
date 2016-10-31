@@ -103,17 +103,72 @@ public class PriceCalculator {
 			if(e.getCode()==dest)
 				destStation=e;
 		}
-		for(int i = startStation.getCode();i<destStation.getCode();i++){
+		
+		/*for(int i = startStation.getCode();i<destStation.getCode();i++){
 			Station temp=StationList.get(i);
 			if(i==start)
 				continue;
 			else
 			totalDistance += temp.getDistance();
+			}*/
+		
+		int startIndex = StationList.indexOf(startStation);
+		int loopSIndex = startIndex;
+		int destIndex = StationList.indexOf(destStation);
+		int loopDIndex = destIndex;
+		double leftDistance = 0;
+		double rightDistance = 0;
+		
+		// Go left
+		if(startIndex > destIndex){
+			while(loopSIndex > 0)
+			{
+				Station prevStation = StationList.get(loopSIndex - 1);
+				leftDistance = leftDistance + StationList.get(loopSIndex).getDistance();
+				
+				if(prevStation == destStation)
+				{
+					break;
+				}
+				
+				loopSIndex--;
 			}
+		}
+		
+		else
+		{
+			// Go right
+			while(loopSIndex < StationList.size()-1)
+			{
+				Station nextStation = StationList.get(loopSIndex + 1);
+				rightDistance = rightDistance + StationList.get(loopSIndex+1).getDistance();
+				
+				if(nextStation == destStation)
+				{
+					break;
+				}
+				
+				loopSIndex++;
+			}
+		}
+		
+		if(leftDistance == 0)
+		{
+			totalDistance = rightDistance;
+		}
+		
+		else if(rightDistance == 0)
+		{
+			totalDistance = leftDistance;
+		}
+		
+		else
+			totalDistance=(leftDistance < rightDistance)?leftDistance:rightDistance;
+		
 		return totalDistance;
 	}
 	
-	public void outputAllStation() {
+	public void outputAllStation(){
 		System.out.printf("%10s%15s\n", "Code", "Station");
 		for (Station station: StationList){
 			System.out.printf("%10s%15s\n", station.getCode(), station.getStation());
@@ -130,12 +185,12 @@ public class PriceCalculator {
 		totalDistance=stationDistance(startStation,destStation);
 		double pricePerKM = 0;
 		
-		if(totalDistance<3 && totalDistance>0)
-			pricePerKM = 20;
-		else if(totalDistance > 3)
-			pricePerKM = 10;
-		else if(totalDistance == 0)
-			return 10;
+		if(totalDistance<1.5 && totalDistance>0)
+			pricePerKM = 2;
+		else if(totalDistance > 1.5 && totalDistance < 8)
+			pricePerKM = 1.5;
+		else
+			pricePerKM = 0.6;
 		
 		if(octopusCechker(octopusMethod)){
 			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * 1;  

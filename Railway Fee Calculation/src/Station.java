@@ -5,6 +5,7 @@ public class Station{
 	private String station;
 	private int code;
 	private double distance;
+	private boolean isInterchange;
 	
 	public Station(String _code, String name,String distance){
 		this.station=name;
@@ -23,5 +24,10 @@ public class Station{
 	
 	public double getDistance(){
 		return distance;
+	}
+	
+	public boolean isInterchange()
+	{
+		return isInterchange;
 	}
 }

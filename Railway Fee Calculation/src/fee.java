@@ -31,6 +31,9 @@ public class fee {
 			Calculator.outputAllStation();
 			dest=input.nextInt();
 			
+			//System.out.println("The distance:" + Calculator.stationDistance(start,dest));
+			//System.out.println("The distance:" + Calculator.stationDistance(dest,start));
+			
 			System.out.println("Please indicate whether it is second trip: (y/n)");
 			isSecond = input.next().charAt(0);
 			
