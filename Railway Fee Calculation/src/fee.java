@@ -108,9 +108,9 @@ public class fee {
 	private static int askForMethod(Scanner input) {
 		int method;
 		System.out.println("Please choose your payment method");
-		System.out.printf("\n%10s%15s", "Code", "Payment Method");
-		System.out.printf("\n%10s%15s", "1", "Octopus");
-		System.out.printf("\n%10s%15s", "2", "Ticket");
+		System.out.printf("%10s%15s", "Code", "Payment Method\n");
+		System.out.printf("%10s%15s", "1", "Octopus\n");
+		System.out.printf("%10s%15s", "2", "Ticket\n");
 		
 		method = input.nextInt();
 		while (!(method==1||method==2))
@@ -136,12 +136,12 @@ public class fee {
 		
 		int group = 1;
 		System.out.println("Please input your age group code: ");
-		System.out.printf("\n%10s%15s", "Code", "Age Group");
+		System.out.printf("%10s%15s", "Code", "Age Group\n");
 		
-		System.out.printf("\n%10s%15s", "1", "Child");
-		System.out.printf("\n%10s%15s", "2", "Student");
-		System.out.printf("\n%10s%15s", "3", "Adult");
-		System.out.printf("\n%10s%15s", "4", "Elderly");
+		System.out.printf("%10s%15s", "1", "Child\n");
+		System.out.printf("%10s%15s", "2", "Student\n");
+		System.out.printf("%10s%15s", "3", "Adult\n");
+		System.out.printf("%10s%15s", "4", "Elderly\n");
 		
 		group = in.nextInt();
 		while (group<=0||group>4)
