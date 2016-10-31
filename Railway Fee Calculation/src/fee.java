@@ -31,8 +31,8 @@ public class fee {
 			Calculator.outputAllStation();
 			dest=input.nextInt();
 			
-			System.out.println("Please choose whether it is second trip: ");
-			isSecond = input.nextInt();
+			System.out.println("Please indicate whether it is second trip: (y/n)");
+			isSecond = input.next().charAt(0);
 			
 			quantity = askForQuantity(input);
 			
