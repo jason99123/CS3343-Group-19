@@ -103,7 +103,7 @@ public class PriceCalculator {
 			if(e.getCode()==dest)
 				destStation=e;
 		}
-		for(int i = startStation.getCode();i<=destStation.getCode();i++){
+		for(int i = startStation.getCode();i<destStation.getCode();i++){
 			Station temp=StationList.get(i);
 			if(i==start)
 				continue;
