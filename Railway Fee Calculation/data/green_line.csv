@@ -1,18 +1,18 @@
 StationID,StationName,Distance,Interchange
-,Whampoa,0,N
-,Ho Man Tin,0.744,N
-,Yau Ma Tei,1.32,Y
-,Mong Kok,0.675,Y
-,Prince Edward,0.635,Y
-,Shek Kip Mei,0.745,N
-,Kowloon Tong,0.929,N
-,Lok Fu,1.15,N
-,Wong Tai Sin,0.727,N
-,Diamond Hill,0.922,N
-,Choi Hung,0.94,N
-,Kowloon Bay,1.37,N
-,Ngau Tau Kok,1.03,N
-,Kwun Tong,0.831,N
-,Lam Tin,0.877,N
-,Yau Tong,1.07,Y
-,Tiu Keng Leng,1.67,Y
+18,Whampoa,0,N
+19,Ho Man Tin,0.744,N
+20,Yau Ma Tei,1.32,Y
+21,Mong Kok,0.675,Y
+22,Prince Edward,0.635,Y
+23,Shek Kip Mei,0.745,N
+24,Kowloon Tong,0.929,N
+25,Lok Fu,1.15,N
+26,Wong Tai Sin,0.727,N
+27,Diamond Hill,0.922,N
+28,Choi Hung,0.94,N
+29,Kowloon Bay,1.37,N
+30,Ngau Tau Kok,1.03,N
+31,Kwun Tong,0.831,N
+32,Lam Tin,0.877,N
+33,Yau Tong,1.07,Y
+34,Tiu Keng Leng,1.67,Y

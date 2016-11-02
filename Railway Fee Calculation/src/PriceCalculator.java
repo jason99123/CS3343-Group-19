@@ -68,19 +68,32 @@ public class PriceCalculator {
 	
 	@SuppressWarnings("resource")
 	public void readallStation(){ //read csv data
+		
+		String[] fileName = {"blue","green","purple","red"};
+		LineCenter lc = LineCenter.getInstance();
+		
 		try {
-			BufferedReader reader= new BufferedReader(new FileReader("data/StationList.csv")); //import csv file
 			
-			String row=null; //no line is read at first
-			
-			while((row=reader.readLine())!=null){
+			for(String s : fileName)
+			{
+				BufferedReader reader= new BufferedReader(new FileReader("data/" + s + "_line.csv")); //import csv file
 				
-				String data[]=row.split(","); //split columns in each rows
 				
-				Station newStation= new Station(data[0],data[1],data[2]);
-				StationList.add(newStation);
+				String row=reader.readLine(); //no line is read at first
+				Line line = new Line(s);
 				
+				while((row=reader.readLine())!=null){
+					
+					String data[]=row.split(","); //split columns in each rows
+					
+					Station newStation= new Station(data[0],data[1],data[2],data[3]);
+					StationList.add(newStation);
+					line.addStation(newStation);
+				}
+				
+				lc.addLine(line);
 			}
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block (need to edit it later)
 			e.printStackTrace();

@@ -7,11 +7,11 @@ public class Station{
 	private double distance;
 	private boolean isInterchange;
 	
-	public Station(String _code, String name,String distance){
+	public Station(String _code, String name,String distance,String isInterchange){
 		this.station=name;
 		this.code = Integer.parseInt(_code);
 		this.distance=Double.parseDouble(distance);
-
+		this.isInterchange = Boolean.parseBoolean(isInterchange);
 	}
 	
 	public String getStation(){

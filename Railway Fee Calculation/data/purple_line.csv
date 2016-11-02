@@ -1,9 +1,9 @@
 StationID,StationName,Distance,Interchange
-,North Point,0,Y
-,Quarry Bay,0.891,Y
-,Yau Tong,3.1,Y
-,Tiu Keng Leng,1.68,Y
-,Tseung Kwan O,0.908,N
-,LOHAS Park,1.6,N
-,Hang Hau,1.02,N
-,Po Lam,1.02,N
+35,North Point,0,Y
+36,Quarry Bay,0.891,Y
+37,Yau Tong,3.1,Y
+38,Tiu Keng Leng,1.68,Y
+39,Tseung Kwan O,0.908,N
+40,LOHAS Park,1.6,N
+41,Hang Hau,1.02,N
+42,Po Lam,1.02,N
