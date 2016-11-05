@@ -1,18 +1,18 @@
 StationID,StationName,Distance,Interchange
-1,Kennedy Town,0,N
-2,HKU,0.665,N
-3,Sai Ying Pun,1.519,N
-4,Sheung Wan,2.484,N
-5,Central,3.265,Y
-6,Admiralty,4.014,Y
-7,Wan Chai,4.875,N
-8,Causeway Bay,6.195,N
-9,Tin Hau,6.926,N
-10,Fortress Hill,7.567,N
-11,North Point,8.338,Y
-12,Quarry Bay,9.23,Y
-13,Tai Koo,10.05,N
-14,Sai Wan Ho,10.77,N
-15,Shau Kei Wan,11.56,N
-16,Heng Fa Chuen,12.71,N
-17,Chai Wan,14.07,N
+1,Chai Wan,0,N
+2,Heng Fa Chuen,0.744,N
+3,Shau Kei Wan,1.32,N
+4,Sai Wan Ho,0.675,N
+5,Tai Koo,0.635,N
+6,Quarry Bay,0.745,Y
+7,North Point,0.929,N
+8,Fortress Hill,1.15,N
+9,Tin Hau,0.727,N
+10,Causeway Bay,0.922,N
+11,Wai Chai,0.94,N
+12,Admiralty,1.37,Y
+13,Central,1.03,N
+14,Cheung Wan,0.831,N
+15,Sai Ying Pun,0.877,N
+16,HKU,1.07,N
+17,Kennedy Town,1.67,N

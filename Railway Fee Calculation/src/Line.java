@@ -14,8 +14,11 @@ public class Line {
 	
 	public int getStationPos(Station s)
 	{
+		
+		
 		for(Station s1 : stations)
 		{
+			
 			if(s1.getStation().equalsIgnoreCase(s.getStation()))
 			{
 				return stations.indexOf(s1);
@@ -38,6 +41,32 @@ public class Line {
 		return null;
 	}
 	
+	public Station getIndexByName(Station s)
+	{
+		for(Station s1 : stations)
+		{
+			if(s1.getStation().equalsIgnoreCase(s.getStation()))
+			{
+				return s1;
+			}
+		}
+		
+		return null;
+	}
+	
+	public Station getStationByCode(int code)
+	{
+		for(Station s : stations)
+		{
+			if(s.getCode() == code)
+			{
+				return s;
+			}
+		}
+		
+		return null;
+	}
+	
 	public Station returnStation(int pos)
 	{
 		return stations.get(pos);
@@ -47,7 +76,8 @@ public class Line {
 	{
 		boolean startExist = false;
 		boolean endExist = false;
-				
+		
+		
 		for(Station s1 : stations)
 		{
 			if(s.getStation().equalsIgnoreCase(s1.getStation()))
@@ -60,7 +90,7 @@ public class Line {
 				endExist = true;
 			}
 		}
-
+		
 		return (startExist == true && endExist == true)?true:false;
 	}
 	
@@ -75,28 +105,50 @@ public class Line {
 		return false;
 	}
 	
-	public int getDistance(Station s, Station e)
+	public double getDistance(Station s, Station e)
 	{
-		int countS=0;
-		int countD=0;
+		int startIndex = getStationPos(s);
+		int loopSIndex = startIndex;
+		int destIndex = getStationPos(e);
+		int loopDIndex = destIndex;
+		double returnDistance = 0;
 		
-		for(Station s1:stations){
-			countS++;
-			if(s1.getStation().equals(s.getStation())){
-				break;
+		if(startIndex > destIndex)
+		{
+			
+			
+			while(loopSIndex > 0)
+			{			
+				Station prevStation = stations.get(loopSIndex - 1);
+				returnDistance = returnDistance + stations.get(loopSIndex).getDistance();
+				
+				if(prevStation.getStation().equalsIgnoreCase(e.getStation()))
+				{
+					break;
+				}
+				
+				loopSIndex--;
 			}
 		}
 		
-		for(Station s1:stations){
-			countD++;
-			if(s1.getStation().equals(e.getStation())){
-				break;
+		else
+		{
+			
+			while(loopSIndex < stations.size()-1)
+			{
+				Station nextStation = stations.get(loopSIndex + 1);
+				returnDistance = returnDistance + stations.get(loopSIndex+1).getDistance();
+				
+				if(nextStation.getStation().equalsIgnoreCase(e.getStation()))
+				{
+					break;
+				}
+				
+				loopSIndex++;
 			}
 		}
 		
-//		System.out.println("countD" + countD);
-//		System.out.println("countS" + countS);
-		return Math.abs(countD - countS);
+		return returnDistance;
 	}
 	
 	public int getNumberOfStation()

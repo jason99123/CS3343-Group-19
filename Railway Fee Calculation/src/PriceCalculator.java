@@ -9,6 +9,7 @@ public class PriceCalculator {
 	
 	private static PriceCalculator instance=new PriceCalculator();
 	private ArrayList<Station>StationList = new ArrayList<>();
+	private LineCenter lc = LineCenter.getInstance();
 	
 	private PriceCalculator(){
 		readallStation();
@@ -70,14 +71,15 @@ public class PriceCalculator {
 	public void readallStation(){ //read csv data
 		
 		String[] fileName = {"blue","green","purple","red"};
-		LineCenter lc = LineCenter.getInstance();
+		int[] posX = {951,916,867,817,772,716,684,635,591,542,493,454,407,363,-1,-1,527,528,529,550,593,629,681,746,801,841,841,841,840,867,918,685,717,866,918,945,946,947,178,225,270,315,360,393,432,479,506,530,527,529,524,524,454,409};
+		int[] posY = {698,665,646,646,647,638,639,644,643,644,643,637,640,641,-1,-1,494,460,425,383,363,364,366,362,364,396,428,465,502,529,526,640,640,528,531,499,465,435,365,366,365,365,368,366,364,366,383,425,462,493,522,551,641,640};
 		
+		int readStationGUIPos = 0;
 		try {
 			
 			for(String s : fileName)
 			{
 				BufferedReader reader= new BufferedReader(new FileReader("data/" + s + "_line.csv")); //import csv file
-				
 				
 				String row=reader.readLine(); //no line is read at first
 				Line line = new Line(s);
@@ -86,7 +88,16 @@ public class PriceCalculator {
 					
 					String data[]=row.split(","); //split columns in each rows
 					
+					if(data[1].equalsIgnoreCase("LOHAS Park") || data[1].equalsIgnoreCase("Sai Ying Pun") || data[1].equalsIgnoreCase("HKU") || data[1].equalsIgnoreCase("Kennedy Town"))
+					{
+						continue;
+					}
+					
 					Station newStation= new Station(data[0],data[1],data[2],data[3]);
+					newStation.setPosX(posX[readStationGUIPos]);
+					newStation.setPosY(posY[readStationGUIPos]);
+					readStationGUIPos++;
+					
 					StationList.add(newStation);
 					line.addStation(newStation);
 				}
@@ -104,81 +115,106 @@ public class PriceCalculator {
 		
 		
 	}
+	
+	public double stationDistance(int start,int dest)
+	{
+		Station startStation = lc.getStationByCode(start);
+		Station endStation = lc.getStationByCode(dest);
+		
+		
+		return stationDistance(startStation,endStation,null);
+	}
 
-
-	public double stationDistance(int start,int dest){
-		Station startStation=null;
-		Station destStation = null;
-		double totalDistance = 0;
-		for(Station e:StationList){
-			if(e.getCode()==start)
-				startStation = e;
-			if(e.getCode()==dest)
-				destStation=e;
+	// Calculate the shortest distance
+	public double stationDistance(Station start,Station dest,ArrayList<Line> exceptionList){
+		
+		double leftDistance = 1000;
+		double rightDistance = 1000;
+		double tmpLeft = 0;
+		double tmpRight = 0;
+		double returnDistance = 0;
+		
+		if(exceptionList == null)
+		{
+			exceptionList = new ArrayList<Line>();
 		}
 		
-		/*for(int i = startStation.getCode();i<destStation.getCode();i++){
-			Station temp=StationList.get(i);
-			if(i==start)
+		ArrayList<Line> line = lc.inLine(start);
+		
+		
+		for(Line l : line)
+		{
+			if(exceptionList.contains(l))
+			{
 				continue;
-			else
-			totalDistance += temp.getDistance();
-			}*/
-		
-		int startIndex = StationList.indexOf(startStation);
-		int loopSIndex = startIndex;
-		int destIndex = StationList.indexOf(destStation);
-		int loopDIndex = destIndex;
-		double leftDistance = 0;
-		double rightDistance = 0;
-		
-		// Go left
-		if(startIndex > destIndex){
-			while(loopSIndex > 0)
+			}
+			
+			// Both stations in same line
+			for(Line l2 : line)
 			{
-				Station prevStation = StationList.get(loopSIndex - 1);
-				leftDistance = leftDistance + StationList.get(loopSIndex).getDistance();
-				
-				if(prevStation == destStation)
+				if(l2.stationExists(start, dest))
 				{
-					break;
+					return l2.getDistance(start, dest);
+				}
+			}
+			
+			
+			int startIndex = l.getStationPos(start);
+			int loopStartIndex = startIndex;
+			
+			// Go left
+			while(loopStartIndex > 0)
+			{
+				Station prevStation = l.returnStation(loopStartIndex-1);
+				
+				if(prevStation.isInterchange())
+				{
+					ArrayList<Line> passList = deepCoping(exceptionList);
+					passList.add(l);
+					double curDistance = l.getDistance(start, prevStation);
+					tmpLeft = stationDistance(prevStation,dest,passList) + curDistance;
+					leftDistance = (tmpLeft < leftDistance)?tmpLeft:leftDistance;
+					
 				}
 				
-				loopSIndex--;
+				loopStartIndex--;
 			}
-		}
-		
-		else
-		{
+			
+			loopStartIndex = startIndex;
+			
 			// Go right
-			while(loopSIndex < StationList.size()-1)
+			while(loopStartIndex < l.getNumberOfStation()-1)
 			{
-				Station nextStation = StationList.get(loopSIndex + 1);
-				rightDistance = rightDistance + StationList.get(loopSIndex+1).getDistance();
+				Station nextStation = l.returnStation(loopStartIndex+1);
 				
-				if(nextStation == destStation)
+				if(nextStation.isInterchange())
 				{
-					break;
+					ArrayList<Line> passList = deepCoping(exceptionList);
+					passList.add(l);
+					double curDistance = l.getDistance(start, nextStation);
+					tmpRight = stationDistance(nextStation,dest,passList) + curDistance;
+					rightDistance = (tmpRight < rightDistance)?tmpRight:rightDistance;
 				}
 				
-				loopSIndex++;
+				loopStartIndex++;
 			}
+					
 		}
 		
-		if(leftDistance == 0)
+		if(leftDistance == 1000)
 		{
-			totalDistance = rightDistance;
+			returnDistance = rightDistance;
 		}
 		
-		else if(rightDistance == 0)
+		else if(rightDistance == 1000)
 		{
-			totalDistance = leftDistance;
+			returnDistance = leftDistance;
 		}
 		
 		else
-			totalDistance=(leftDistance < rightDistance)?leftDistance:rightDistance;
+			returnDistance =(leftDistance < rightDistance)?leftDistance:rightDistance;
 		
-		return totalDistance;
+		return returnDistance;	
 	}
 	
 	public void outputAllStation(){
@@ -189,6 +225,18 @@ public class PriceCalculator {
 		}
 		
 	}
+	
+	private ArrayList<Line> deepCoping(ArrayList<Line> another)
+	{
+		ArrayList<Line> returnList = new ArrayList<Line>();
+		
+		for(Line l : another)
+		{
+			returnList.add(l);
+		}
+		
+		return returnList;
+	}
 
 	public double finalCalculation(int ageGroup,int quantity,int octopusMethod,int startStation,int destStation){
 		double finalPrice=0;
@@ -196,6 +244,30 @@ public class PriceCalculator {
 		double totalDistance;
 		ageGroupDiscount=getDiscountFromAge(ageGroup);
 		totalDistance=stationDistance(startStation,destStation);
+		double pricePerKM = 0;
+		
+		if(totalDistance<1.5 && totalDistance>0)
+			pricePerKM = 2;
+		else if(totalDistance > 1.5 && totalDistance < 8)
+			pricePerKM = 1.5;
+		else
+			pricePerKM = 0.6;
+		
+		if(octopusCechker(octopusMethod)){
+			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * 1;  
+		}
+		else
+			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * quantity;  
+
+		return finalPrice;
+	}
+	
+	public double finalCalculation(int ageGroup,int quantity,int octopusMethod,Station startStation,Station destStation){
+		double finalPrice=0;
+		double ageGroupDiscount;
+		double totalDistance;
+		ageGroupDiscount=getDiscountFromAge(ageGroup);
+		totalDistance=stationDistance(startStation,destStation,null);
 		double pricePerKM = 0;
 		
 		if(totalDistance<1.5 && totalDistance>0)

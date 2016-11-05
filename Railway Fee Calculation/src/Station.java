@@ -6,12 +6,14 @@ public class Station{
 	private int code;
 	private double distance;
 	private boolean isInterchange;
+	private int posX;
+	private int posY;
 	
 	public Station(String _code, String name,String distance,String isInterchange){
 		this.station=name;
 		this.code = Integer.parseInt(_code);
 		this.distance=Double.parseDouble(distance);
-		this.isInterchange = Boolean.parseBoolean(isInterchange);
+		this.isInterchange = (isInterchange.equalsIgnoreCase("Y"))?true:false;
 	}
 	
 	public String getStation(){
@@ -29,5 +31,25 @@ public class Station{
 	public boolean isInterchange()
 	{
 		return isInterchange;
+	}
+	
+	public void setPosX(int x)
+	{
+		posX = x;
+	}
+	
+	public void setPosY(int y)
+	{
+		posY = y;
+	}
+	
+	public int getPosX()
+	{
+		return posX;
+	}
+	
+	public int getPosY()
+	{
+		return posY;
 	}
 }

@@ -9,9 +9,9 @@ StationID,StationName,Distance,Interchange
 50,Cheung Sha Wan,0.86,N
 51,Sham Shui Po,0.744,N
 52,Prince Edward,0.943,Y
-53,Mong Kok,0.638,Y
-54,Yau Ma Tei,0.689,Y
+53,Mong Kok,0.638,N
+54,Yau Ma Tei,0.689,N
 55,Jordan,1.02,N
 56,Tsim Sha Tsui,0.741,N
 57,Admiralty,2.17,Y
-58,Central,0.751,Y
+58,Central,0.751,N

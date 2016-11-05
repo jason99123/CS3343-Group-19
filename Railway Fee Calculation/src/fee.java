@@ -12,27 +12,27 @@ public class fee {
 	// Added by Ben on 14/10
 	private static int isSecond;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		
 		PriceCalculator Calculator=PriceCalculator.getInstance();
 		try {
 			//call for the formula
 			Scanner input=new Scanner(System.in);
-			
-			ageGroup = askForAgeGroup(input);
+
+//			ageGroup = askForAgeGroup(input);
 			 
 			
 			System.out.println("Please input Starting Station: ");
 			Calculator.outputAllStation();
+			
+			Gui g = new Gui();
+			g.display();
 			start = input.nextInt();
 			
 			
 			System.out.println("Please input Destination Station: ");
 			Calculator.outputAllStation();
 			dest=input.nextInt();
-			
-			//System.out.println("The distance:" + Calculator.stationDistance(start,dest));
-			//System.out.println("The distance:" + Calculator.stationDistance(dest,start));
 			
 			System.out.println("Please indicate whether it is second trip: (y/n)");
 			isSecond = input.next().charAt(0);

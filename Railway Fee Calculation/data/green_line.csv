@@ -2,7 +2,7 @@ StationID,StationName,Distance,Interchange
 18,Whampoa,0,N
 19,Ho Man Tin,0.744,N
 20,Yau Ma Tei,1.32,Y
-21,Mong Kok,0.675,Y
+21,Mong Kok,0.675,N
 22,Prince Edward,0.635,Y
 23,Shek Kip Mei,0.745,N
 24,Kowloon Tong,0.929,N
@@ -15,4 +15,4 @@ StationID,StationName,Distance,Interchange
 31,Kwun Tong,0.831,N
 32,Lam Tin,0.877,N
 33,Yau Tong,1.07,Y
-34,Tiu Keng Leng,1.67,Y
+34,Tiu Keng Leng,1.67,N
