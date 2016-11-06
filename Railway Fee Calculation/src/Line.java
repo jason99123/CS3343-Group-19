@@ -7,11 +7,20 @@ public class Line {
 	
 	public Line(String name){this.name = name;}
 	
+	/**
+	 * Add a station into a line
+	 * @param s Station to be added
+	 */
 	public void addStation(Station s)
 	{
 		stations.add(s);
 	}
 	
+	/**
+	 * Get the position of a station in a line
+	 * @param s Station to be searched
+	 * @return index of station
+	 */
 	public int getStationPos(Station s)
 	{
 		
@@ -28,6 +37,11 @@ public class Line {
 		return -1;
 	}
 	
+	/**
+	 * Return the station object by giving a station name
+	 * @param name
+	 * @return station
+	 */
 	public Station getStation(String name)
 	{
 		for(Station s : stations)
@@ -41,6 +55,11 @@ public class Line {
 		return null;
 	}
 	
+	/**
+	 * I forget what is this...
+	 * @param s station
+	 * @return
+	 */
 	public Station getIndexByName(Station s)
 	{
 		for(Station s1 : stations)
@@ -54,6 +73,11 @@ public class Line {
 		return null;
 	}
 	
+	/**
+	 * Give a code and return a station, return null if not found
+	 * @param code
+	 * @return station or null
+	 */
 	public Station getStationByCode(int code)
 	{
 		for(Station s : stations)
@@ -67,11 +91,22 @@ public class Line {
 		return null;
 	}
 	
+	/**
+	 * Return a station by giving a position
+	 * @param pos
+	 * @return
+	 */
 	public Station returnStation(int pos)
 	{
 		return stations.get(pos);
 	}
 	
+	/**
+	 * Check whether both stations exist in the same line
+	 * @param s Station 1
+	 * @param e Station 2
+	 * @return true if both station in same line, else return false
+	 */
 	public boolean stationExists(Station s, Station e)
 	{
 		boolean startExist = false;
@@ -94,6 +129,11 @@ public class Line {
 		return (startExist == true && endExist == true)?true:false;
 	}
 	
+	/**
+	 * Return true if the station exist, else return false
+	 * @param s
+	 * @return
+	 */
 	public boolean stationExists(Station s)
 	{
 		for(Station s1 : stations)
@@ -105,6 +145,12 @@ public class Line {
 		return false;
 	}
 	
+	/**
+	 * Get the distance between two stations in the same line
+	 * @param s Start station
+	 * @param e end station
+	 * @return distance
+	 */
 	public double getDistance(Station s, Station e)
 	{
 		int startIndex = getStationPos(s);
@@ -113,15 +159,16 @@ public class Line {
 		int loopDIndex = destIndex;
 		double returnDistance = 0;
 		
+		// Go left and found the destination station
 		if(startIndex > destIndex)
 		{
-			
 			
 			while(loopSIndex > 0)
 			{			
 				Station prevStation = stations.get(loopSIndex - 1);
 				returnDistance = returnDistance + stations.get(loopSIndex).getDistance();
 				
+				// Found
 				if(prevStation.getStation().equalsIgnoreCase(e.getStation()))
 				{
 					break;
@@ -131,6 +178,7 @@ public class Line {
 			}
 		}
 		
+		// Go right and found the destination station
 		else
 		{
 			
@@ -139,6 +187,7 @@ public class Line {
 				Station nextStation = stations.get(loopSIndex + 1);
 				returnDistance = returnDistance + stations.get(loopSIndex+1).getDistance();
 				
+				// Found
 				if(nextStation.getStation().equalsIgnoreCase(e.getStation()))
 				{
 					break;
@@ -151,16 +200,27 @@ public class Line {
 		return returnDistance;
 	}
 	
+	/**
+	 * Return the number of station in this line
+	 * @return
+	 */
 	public int getNumberOfStation()
 	{
 		return stations.size();
 	}
 	
+	/**
+	 * Return the name of this station
+	 * @return
+	 */
 	public String getName()
 	{
 		return name;
 	}
 	
+	/**
+	 * Print all station in this line
+	 */
 	public void printAll()
 	{
 		for(Station s : stations)
@@ -170,6 +230,12 @@ public class Line {
 		}
 	}
 	
+	/**
+	 * Get the next interchange station
+	 * @param curPos
+	 * @param direction
+	 * @return
+	 */
 	public Station getNextInterchange(int curPos , String direction)
 	{
 		if(direction.equalsIgnoreCase("L"))

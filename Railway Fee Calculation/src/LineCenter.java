@@ -11,7 +11,12 @@ public class LineCenter {
 	{
 		return instance;
 	}
-		
+	
+	/**
+	 * Check the given station is in which lines and return them
+	 * @param s
+	 * @return the arraylist of line
+	 */
 	public ArrayList<Line> inLine(Station s)
 	{
 		ArrayList<Line> returnList = new ArrayList<>();
@@ -28,6 +33,11 @@ public class LineCenter {
 		return returnList;
 	}
 	
+	/**
+	 * Search through all lines and return the station by giving the code
+	 * @param code
+	 * @return
+	 */
 	public Station getStationByCode(int code)
 	{
 		for(Line l: line)
@@ -42,6 +52,12 @@ public class LineCenter {
 		return null;
 	}
 	
+	/**
+	 * The method used in GUI, give the x and y position and return the station
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public Station getStationByPos(int x, int y)
 	{
 		

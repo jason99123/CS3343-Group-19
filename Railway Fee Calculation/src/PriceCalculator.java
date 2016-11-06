@@ -70,11 +70,14 @@ public class PriceCalculator {
 	@SuppressWarnings("resource")
 	public void readallStation(){ //read csv data
 		
+		// The information
 		String[] fileName = {"blue","green","purple","red"};
 		int[] posX = {951,916,867,817,772,716,684,635,591,542,493,454,407,363,-1,-1,527,528,529,550,593,629,681,746,801,841,841,841,840,867,918,685,717,866,918,945,946,947,178,225,270,315,360,393,432,479,506,530,527,529,524,524,454,409};
 		int[] posY = {698,665,646,646,647,638,639,644,643,644,643,637,640,641,-1,-1,494,460,425,383,363,364,366,362,364,396,428,465,502,529,526,640,640,528,531,499,465,435,365,366,365,365,368,366,364,366,383,425,462,493,522,551,641,640};
 		
+		// For reading the position in GUI
 		int readStationGUIPos = 0;
+		
 		try {
 			
 			for(String s : fileName)
@@ -88,6 +91,7 @@ public class PriceCalculator {
 					
 					String data[]=row.split(","); //split columns in each rows
 					
+					// These stations are not added because the map is not up-to-date
 					if(data[1].equalsIgnoreCase("LOHAS Park") || data[1].equalsIgnoreCase("Sai Ying Pun") || data[1].equalsIgnoreCase("HKU") || data[1].equalsIgnoreCase("Kennedy Town"))
 					{
 						continue;
@@ -116,6 +120,12 @@ public class PriceCalculator {
 		
 	}
 	
+	/**
+	 * Get the distance between two stations by giving two code
+	 * @param start
+	 * @param dest
+	 * @return
+	 */
 	public double stationDistance(int start,int dest)
 	{
 		Station startStation = lc.getStationByCode(start);
@@ -125,7 +135,13 @@ public class PriceCalculator {
 		return stationDistance(startStation,endStation,null);
 	}
 
-	// Calculate the shortest distance
+	/**
+	 * Calculate the distance by recursion
+	 * @param start
+	 * @param dest
+	 * @param exceptionList The list that will not be checked again
+	 * @return
+	 */
 	public double stationDistance(Station start,Station dest,ArrayList<Line> exceptionList){
 		
 		double leftDistance = 1000;
@@ -134,6 +150,7 @@ public class PriceCalculator {
 		double tmpRight = 0;
 		double returnDistance = 0;
 		
+		// The first call the exception list is null
 		if(exceptionList == null)
 		{
 			exceptionList = new ArrayList<Line>();
@@ -144,12 +161,13 @@ public class PriceCalculator {
 		
 		for(Line l : line)
 		{
+			// If the line is checked, don't check it again
 			if(exceptionList.contains(l))
 			{
 				continue;
 			}
 			
-			// Both stations in same line
+			// If both stations in same line, return the distance
 			for(Line l2 : line)
 			{
 				if(l2.stationExists(start, dest))
@@ -167,12 +185,14 @@ public class PriceCalculator {
 			{
 				Station prevStation = l.returnStation(loopStartIndex-1);
 				
+				// If the station is interchange station, use that station as a start station
 				if(prevStation.isInterchange())
 				{
 					ArrayList<Line> passList = deepCoping(exceptionList);
 					passList.add(l);
 					double curDistance = l.getDistance(start, prevStation);
 					tmpLeft = stationDistance(prevStation,dest,passList) + curDistance;
+					// May have a chance to check more than 1 line
 					leftDistance = (tmpLeft < leftDistance)?tmpLeft:leftDistance;
 					
 				}
@@ -180,6 +200,7 @@ public class PriceCalculator {
 				loopStartIndex--;
 			}
 			
+			// Reset the looping index
 			loopStartIndex = startIndex;
 			
 			// Go right
@@ -187,12 +208,14 @@ public class PriceCalculator {
 			{
 				Station nextStation = l.returnStation(loopStartIndex+1);
 				
+				// If the station is interchange station, use that station as a start station
 				if(nextStation.isInterchange())
 				{
 					ArrayList<Line> passList = deepCoping(exceptionList);
 					passList.add(l);
 					double curDistance = l.getDistance(start, nextStation);
 					tmpRight = stationDistance(nextStation,dest,passList) + curDistance;
+					// May have a chance to check more than 1 line
 					rightDistance = (tmpRight < rightDistance)?tmpRight:rightDistance;
 				}
 				
@@ -201,22 +224,28 @@ public class PriceCalculator {
 					
 		}
 		
+		// Nothing is found in the left
 		if(leftDistance == 1000)
 		{
 			returnDistance = rightDistance;
 		}
 		
+		// Nothing is found in the left
 		else if(rightDistance == 1000)
 		{
 			returnDistance = leftDistance;
 		}
 		
+		// Compare the distance
 		else
 			returnDistance =(leftDistance < rightDistance)?leftDistance:rightDistance;
 		
 		return returnDistance;	
 	}
 	
+	/**
+	 * Output all stations
+	 */
 	public void outputAllStation(){
 		System.out.printf("%10s%15s\n", "Code", "Station");
 		for (Station station: StationList){
@@ -226,6 +255,11 @@ public class PriceCalculator {
 		
 	}
 	
+	/**
+	 * Copy a new arraylist
+	 * @param another
+	 * @return
+	 */
 	private ArrayList<Line> deepCoping(ArrayList<Line> another)
 	{
 		ArrayList<Line> returnList = new ArrayList<Line>();
@@ -262,6 +296,15 @@ public class PriceCalculator {
 		return finalPrice;
 	}
 	
+	/**
+	 * Use station is better, return the price
+	 * @param ageGroup
+	 * @param quantity
+	 * @param octopusMethod
+	 * @param startStation
+	 * @param destStation
+	 * @return
+	 */
 	public double finalCalculation(int ageGroup,int quantity,int octopusMethod,Station startStation,Station destStation){
 		double finalPrice=0;
 		double ageGroupDiscount;
