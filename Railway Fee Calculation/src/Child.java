@@ -1,5 +1,5 @@
 
-public class Child implements Class{
+public class Child implements AgeGroup{
 
 	@Override
 	public float getDiscount() {

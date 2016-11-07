@@ -1,5 +1,5 @@
 
-public class Student implements Class{
+public class Student implements AgeGroup{
 	@Override
 	public float getDiscount() {
 		
