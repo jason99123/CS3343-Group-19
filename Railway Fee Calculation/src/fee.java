@@ -1,39 +1,29 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class fee {
 
-	private static int ageGroup;
-	private static int start;
-	private static int dest;
-	private static int quantity;
-	private static int method;
-	private static AgeGroup ageGroupClass;
-	private static Method paymentMethod;
+	private static int ageGroup = 0;
+	private static int start = 0;
+	private static int dest = 0;
+	private static int quantity = 0;
+	private static int method = 0;
+	private static AgeGroup ageGroupClass = null;
+	private static Method paymentMethod = null;
 	private static boolean isSecond;
+	private static String octId = "";
+	private static PriceCalculator calculator=PriceCalculator.getInstance();
 	
 	public static void main(String[] args) throws Exception{
 		
-		PriceCalculator Calculator=PriceCalculator.getInstance();
 		try {
 			//call for the formula
-			Gui g = new Gui();
-			g.display();
-			Scanner input=new Scanner(System.in);
-
-			ageGroup = askForAgeGroup(input);
-			 
-			
-			
-			start = getStartStation(Calculator, input);
-			
-	
-			dest=getDestinationStation(Calculator, input);
-			
-			method = askForMethod(input);
-			
-			methodHandling(method, input);
+//			Gui g = new Gui();
+//			g.display();
+			promptInfo();
 		
 
 			System.out.println("The price is: $"+(double)Math.round(finalCalculation()*10)/10);
@@ -43,24 +33,42 @@ public class fee {
 			System.out.println("Process Completed.");
 		}
 	}
+
+	private static void promptInfo() {
+		Scanner input=new Scanner(System.in);
+
+		ageGroup = askForAgeGroup(input);
+		 
+		
+		
+		start = getStartStation(calculator, input);
+		
+
+		dest=getDestinationStation(calculator, input);
+		
+		method = askForMethod(input);
+		
+		methodHandling(method, input);
+	}
 	
 	public static void methodHandling(int _method, Scanner input) {
-		if(_method == 1)
+		if(method == 1)
 		{
-			System.out.println("Please indicate whether it is second trip: (y/n)");
-			char isSecondChar = input.next().charAt(0);
+			System.out.print("Please enter your octopus id: ");
+			octId = input.next();
 			
-			quantity = 1;
-			if(isSecondChar == 'Y')
+			if(isSecondTrip(octId))
 			{
 				isSecond = true;
 			}
 			
 			else
 				isSecond = false;
+			
+			quantity = 1;
 		}
 		
-		else if(_method == 2)
+		else if(method == 2)
 		{
 			quantity = askForQuantity(input);
 			isSecond = false;
@@ -69,25 +77,49 @@ public class fee {
 	}
 
 	public static int getDestinationStation(PriceCalculator calculator, Scanner input) {
-		System.out.println("Please input Destination Station: ");
-		calculator.outputAllStation();
-		
-		int tmp = input.nextInt();
 		LineCenter lc = LineCenter.getInstance();
-		System.out.println("You have chosen "+lc.getStationByCode(tmp).getStation()+" as ending station.");
+		System.out.println("Please input Destination Station: ");
+		calculator.outputAllLine();
+		int userInput = input.nextInt();
 		
-		return tmp;
+		if(userInput == 0)
+		{
+			calculator.outputAllStation();
+			dest = input.nextInt();
+		}
+		
+		else
+		{
+			calculator.outputAllLineInStation(userInput);
+			System.out.println("Please input Destination Station: ");
+			dest = input.nextInt();
+		}
+		
+		System.out.println("You have chosen "+lc.getStationByCode(dest).getStation()+" as destination station.");
+		return dest;
 	}
 
 	public static int getStartStation(PriceCalculator calculator, Scanner input) {
-		System.out.println("Please input Starting Station: ");
-		calculator.outputAllStation();
-		
-		int tmp = input.nextInt();
 		LineCenter lc = LineCenter.getInstance();
-		System.out.println("You have chosen "+lc.getStationByCode(tmp).getStation()+" as starting station.");
+		System.out.println("Please input line of Starting Station: (input 0 if not know)");
+		calculator.outputAllLine();
+		int userInput = input.nextInt();
 		
-		return tmp;
+		if(userInput == 0)
+		{
+			calculator.outputAllStation();
+			start = input.nextInt();
+		}
+		
+		else
+		{
+			calculator.outputAllLineInStation(userInput);
+			System.out.println("Please input Starting Station: ");
+			start = input.nextInt();
+		}
+		
+		System.out.println("You have chosen "+lc.getStationByCode(start).getStation()+" as starting station.");
+		return start;
 	}
 
 	private static int askForMethod(Scanner input) {
@@ -252,5 +284,31 @@ public class fee {
 	public static int getMethod()
 	{
 		return method;
+	}
+	
+	public static boolean isSecondTrip(String id)
+	{
+		try {
+			
+			BufferedReader reader= new BufferedReader(new FileReader("data/record.csv"));
+			
+			String row;
+			
+			while((row=reader.readLine())!=null)
+			{
+				if(row.equalsIgnoreCase(id))
+				{
+					return true;
+				}
+			}
+			
+			return false;
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

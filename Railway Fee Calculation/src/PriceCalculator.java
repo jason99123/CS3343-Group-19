@@ -324,5 +324,15 @@ public class PriceCalculator {
 
 		return finalPrice;
 	}
+	
+	public void outputAllLine()
+	{
+		lc.outputAllLines();
+	}
+	
+	public void outputAllLineInStation(int n)
+	{
+		lc.stationInLine(n);
+	}
 
 }

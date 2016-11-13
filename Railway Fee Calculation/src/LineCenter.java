@@ -85,5 +85,22 @@ public class LineCenter {
 	{
 		line.add(l);
 	}
+	
+	public void outputAllLines()
+	{
+		int i = 1;
+		
+		for(Line l : line)
+		{
+			System.out.println(i + ". " + l.getName());
+			i++;
+		}
+	}
+	
+	public void stationInLine(int n)
+	{
+		Line l = line.get(n-1);
+		l.printAll();
+	}
 
 }

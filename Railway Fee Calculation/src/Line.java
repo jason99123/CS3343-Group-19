@@ -223,10 +223,11 @@ public class Line {
 	 */
 	public void printAll()
 	{
+		System.out.println("All station:");
+		
 		for(Station s : stations)
 		{
-			System.out.println("All station:");
-			System.out.println(s.getStation());
+			System.out.println(s.getCode() + ". " + s.getStation());
 		}
 	}
 	
