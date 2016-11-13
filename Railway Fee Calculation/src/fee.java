@@ -18,6 +18,8 @@ public class fee {
 		PriceCalculator Calculator=PriceCalculator.getInstance();
 		try {
 			//call for the formula
+			Gui g = new Gui();
+			g.display();
 			Scanner input=new Scanner(System.in);
 
 			ageGroup = askForAgeGroup(input);
@@ -26,8 +28,6 @@ public class fee {
 			System.out.println("Please input Starting Station: ");
 			Calculator.outputAllStation();
 			
-			//Gui g = new Gui();
-			//g.display();
 			start = input.nextInt();
 			
 			System.out.println("Please input Destination Station: ");
@@ -101,6 +101,62 @@ public class fee {
 		}
 		return amount;
 	}
+	
+	public static int setMethod(int method)
+	{
+		if(method == 1)
+		{
+			paymentMethod = new Octopus();
+		}
+		
+		else
+			paymentMethod = new Cash();
+		
+		return method;
+	}
+	
+	public static int setQuantity(int quan)
+	{
+		quantity = quan;
+		return quan;
+	}
+	
+	public static int setAgeGroup(int group)
+	{
+		if(group == 1)
+		{
+			ageGroupClass = new Child();
+		}
+		
+		else if(group == 2)
+		{
+			ageGroupClass = new Student();
+		}
+		
+		else if(group == 3)
+		{
+			ageGroupClass = new Adult();
+		}
+		
+		else if(group == 4)
+		{
+			ageGroupClass = new Elderly();
+		}
+		
+		return group;
+	}
+	
+	public static int setStartCode(int startCode)
+	{
+		start = startCode;
+		return start;
+	}
+	
+	public static int setDestCode(int destCode)
+	{
+		dest = destCode;
+		return dest;
+	}
 
 	private static int askForAgeGroup(Scanner in) {
 		
@@ -144,7 +200,7 @@ public class fee {
 		return group;
 	}
 
-	private static float finalCalculation() {
+	public static float finalCalculation() {
 		float price = 0;
 		price = paymentMethod.getBasePrice(start, dest, quantity);
 		float discount = ageGroupClass.getDiscount();
