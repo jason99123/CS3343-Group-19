@@ -9,7 +9,7 @@ public class fee {
 	private static int dest;
 	private static int quantity;
 	private static int method;
-	private static Class ageGroupClass;
+	private static AgeGroup ageGroupClass;
 	private static Method paymentMethod;
 	private static boolean isSecond;
 	
@@ -58,7 +58,7 @@ public class fee {
 			}
 		
 
-			System.out.println("The price is: $"+finalCalculation());
+			System.out.println("The price is: $"+(double)Math.round(finalCalculation()*10)/10);
 			//System.out.println("The price is: $"+finalCalculation(start,dest, Calculator));
 		}
 		finally {

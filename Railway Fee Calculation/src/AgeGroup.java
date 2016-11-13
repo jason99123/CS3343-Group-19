@@ -1,4 +1,4 @@
 
-public interface Class {
+public interface AgeGroup {
 	public float getDiscount();
 }
