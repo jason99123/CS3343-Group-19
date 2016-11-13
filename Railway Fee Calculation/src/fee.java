@@ -25,37 +25,15 @@ public class fee {
 			ageGroup = askForAgeGroup(input);
 			 
 			
-			System.out.println("Please input Starting Station: ");
-			Calculator.outputAllStation();
 			
-			start = input.nextInt();
+			start = getStartStation(Calculator, input);
 			
-			System.out.println("Please input Destination Station: ");
-			Calculator.outputAllStation();
-			dest=input.nextInt();
+	
+			dest=getDestinationStation(Calculator, input);
 			
 			method = askForMethod(input);
 			
-			if(method == 1)
-			{
-				System.out.println("Please indicate whether it is second trip: (y/n)");
-				char isSecondChar = input.next().charAt(0);
-				
-				quantity = 1;
-				if(isSecondChar == 'Y')
-				{
-					isSecond = true;
-				}
-				
-				else
-					isSecond = false;
-			}
-			
-			else if(method == 2)
-			{
-				quantity = askForQuantity(input);
-				isSecond = false;
-			}
+			methodHandling(method, input);
 		
 
 			System.out.println("The price is: $"+(double)Math.round(finalCalculation()*10)/10);
@@ -66,6 +44,52 @@ public class fee {
 		}
 	}
 	
+	public static void methodHandling(int _method, Scanner input) {
+		if(_method == 1)
+		{
+			System.out.println("Please indicate whether it is second trip: (y/n)");
+			char isSecondChar = input.next().charAt(0);
+			
+			quantity = 1;
+			if(isSecondChar == 'Y')
+			{
+				isSecond = true;
+			}
+			
+			else
+				isSecond = false;
+		}
+		
+		else if(_method == 2)
+		{
+			quantity = askForQuantity(input);
+			isSecond = false;
+		}
+		
+	}
+
+	public static int getDestinationStation(PriceCalculator calculator, Scanner input) {
+		System.out.println("Please input Destination Station: ");
+		calculator.outputAllStation();
+		
+		int tmp = input.nextInt();
+		LineCenter lc = LineCenter.getInstance();
+		System.out.println("You have chosen "+lc.getStationByCode(tmp).getStation()+" as ending station.");
+		
+		return tmp;
+	}
+
+	public static int getStartStation(PriceCalculator calculator, Scanner input) {
+		System.out.println("Please input Starting Station: ");
+		calculator.outputAllStation();
+		
+		int tmp = input.nextInt();
+		LineCenter lc = LineCenter.getInstance();
+		System.out.println("You have chosen "+lc.getStationByCode(tmp).getStation()+" as starting station.");
+		
+		return tmp;
+	}
+
 	private static int askForMethod(Scanner input) {
 		int method;
 		System.out.println("Please choose your payment method");
@@ -99,6 +123,7 @@ public class fee {
 			System.out.println("Invalid input. Please enter again.");
 			amount = input.nextInt();
 		}
+		System.out.println("You are going to buy "+amount+" tickets.");
 		return amount;
 	}
 	

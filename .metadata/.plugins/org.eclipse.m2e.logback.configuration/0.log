@@ -49,3 +49,5 @@ Caused by: java.net.UnknownHostException: download.eclipse.org
 2016-10-28 09:58:56,904 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2016-10-28 17:00:33,681 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 >>>>>>> 7e9817e8faa3cdbedf828d951ee36be82acae0cf
+2016-11-01 22:04:22,295 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2016-11-13 17:05:01,679 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
