@@ -1,0 +1,13 @@
+Title: Incorrect value output when using the same station out and in
+Description: The price returned is not correct when the same station is set as starting and destination station
+Product: Railway Fee System  Version: v1
+Severity: Urgent	Update: 13/11/2016
+Status: In Progress     Assigned to: Dickson Ng
+Problem:
+The price for a customer to enter and leave the same station should be a fixed $10. However, the actual input is not $10.
+
+Expected Result:
+The price returned should be $10.
+
+Actual Result:
+//Screenshot here
