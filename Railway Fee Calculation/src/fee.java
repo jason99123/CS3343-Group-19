@@ -15,110 +15,117 @@ public class fee {
 	private static Method paymentMethod = null;
 	private static boolean isSecond;
 	private static String octId = "";
-	private static PriceCalculator calculator=PriceCalculator.getInstance();
-	
-	public static void main(String[] args) throws Exception{
-		
-		try {
-			//call for the formula
-//			Gui g = new Gui();
-//			g.display();
-			promptInfo();
-		
+	private static PriceCalculator calculator = PriceCalculator.getInstance();
+	private static boolean resetchecker = false;
 
-			System.out.println("The price is: $"+(double)Math.round(finalCalculation()*10)/10);
-			//System.out.println("The price is: $"+finalCalculation(start,dest, Calculator));
-		}
-		finally {
+	public static void main(String[] args) throws Exception {
+
+		try {
+			// call for the formula
+			// Gui g = new Gui();
+			// g.display();
+
+			promptInfo();
+
+			System.out.println("The price is: $" + (double) Math.round(finalCalculation() * 10) / 10);
+			// System.out.println("The price is: $"+finalCalculation(start,dest,
+			// Calculator));
+		} finally {
 			System.out.println("Process Completed.");
 		}
 	}
 
 	private static void promptInfo() {
-		Scanner input=new Scanner(System.in);
+		/*resetchecker is for reset and make sure that the reset will not overloop*/
+		
+		Scanner input = new Scanner(System.in);
 
 		ageGroup = askForAgeGroup(input);
-		 
-		
-		
-		start = getStartStation(calculator, input);
-		
-
-		dest=getDestinationStation(calculator, input);
-		
-		method = askForMethod(input);
-		
-		methodHandling(method, input);
+		if (!resetchecker)
+			start = getStartStation(calculator, input);
+		if (!resetchecker)
+			dest = getDestinationStation(calculator, input);
+		if (!resetchecker)
+			method = askForMethod(input);
+		if (!resetchecker)
+			methodHandling(method, input);
 	}
-	
+
 	public static void methodHandling(int _method, Scanner input) {
-		if(method == 1)
-		{
+		if (method == 1) {
 			System.out.print("Please enter your octopus id: ");
 			octId = input.next();
-			
-			if(isSecondTrip(octId))
-			{
+
+			if (isSecondTrip(octId)) {
 				isSecond = true;
 			}
-			
+
 			else
 				isSecond = false;
-			
+
 			quantity = 1;
 		}
-		
-		else if(method == 2)
-		{
+
+		else if (method == 2) {
 			quantity = askForQuantity(input);
 			isSecond = false;
 		}
-		
+
 	}
 
 	public static int getDestinationStation(PriceCalculator calculator, Scanner input) {
 		LineCenter lc = LineCenter.getInstance();
-		System.out.println("Please input Destination Station: ");
+		System.out.println("Please input Destination Station:(input -1 if not know and 0 for reset)");
 		calculator.outputAllLine();
 		int userInput = input.nextInt();
-		
-		if(userInput == 0)
-		{
+
+		while ((userInput < -2) || userInput > 4) {
+			System.out.println("Invalid input. Please enter again.:(input -1 if not know and 0 for reset)");
+			calculator.outputAllLine();
+			userInput = input.nextInt();
+		}
+
+		if (userInput == -1) {
 			calculator.outputAllStation();
 			dest = input.nextInt();
-		}
-		
-		else
-		{
+		} else if (userInput == 0) {
+			promptInfo();
+			resetchecker = true;
+		} else {
 			calculator.outputAllLineInStation(userInput);
-			System.out.println("Please input Destination Station: ");
+			System.out.println("Please input Destination Station: (input 0 for reset)");
 			dest = input.nextInt();
 		}
-		
-		System.out.println("You have chosen "+lc.getStationByCode(dest).getStation()+" as destination station.");
+		if (userInput != 0)
+			System.out
+					.println("You have chosen " + lc.getStationByCode(dest).getStation() + " as destination station.");
 		return dest;
 	}
 
 	public static int getStartStation(PriceCalculator calculator, Scanner input) {
 		LineCenter lc = LineCenter.getInstance();
-		System.out.println("Please input line of Starting Station: (input 0 if not know)");
+		System.out.println("Please input line of Starting Station: (input -1 if not know and 0 for reset)");
 		calculator.outputAllLine();
 		int userInput = input.nextInt();
-		
-		if(userInput == 0)
-		{
+		while ((userInput < -2) || userInput > 4) {
+			System.out.println("Invalid input. Please enter again.:(input -1 if not know and 0 for reset)");
+			calculator.outputAllLine();
+			userInput = input.nextInt();
+		}
+
+		if (userInput == -1) {
 			calculator.outputAllStation();
 			start = input.nextInt();
-		}
-		
-		else
-		{
+		} else if (userInput == 0) {
+			promptInfo();
+			resetchecker = true;
+		} else {
 			calculator.outputAllLineInStation(userInput);
-			System.out.println("Please input Starting Station: ");
+			System.out.println("Please input Starting Station:");
 			start = input.nextInt();
 		}
-		
-		System.out.println("You have chosen "+lc.getStationByCode(start).getStation()+" as starting station.");
+		if (userInput != 0)
+			System.out.println("You have chosen " + lc.getStationByCode(start).getStation() + " as starting station.");
 		return start;
 	}
 
@@ -128,132 +135,126 @@ public class fee {
 		System.out.printf("%10s%15s", "Code", "Payment Method\n");
 		System.out.printf("%10s%15s", "1", "Octopus\n");
 		System.out.printf("%10s%15s", "2", "Ticket\n");
-		
+		System.out.printf("%10s%15s", "0", "Reset\n");
+
 		method = input.nextInt();
-		while (!(method==1||method==2))
-		{
+		while (!(method == 1 || method == 2 || method == 0)) {
 			System.out.println("Invalid method. Please enter again.");
 			method = input.nextInt();
 		}
-		
-		if(method == 1)
-		{
+
+		if (method == 1) {
 			paymentMethod = new Octopus();
 		}
-		
-		else
+
+		else if (method == 2)
 			paymentMethod = new Cash();
-		
+		else if (method == 0) {
+			promptInfo();
+			resetchecker = true;
+		}
 		return method;
 	}
 
 	private static int askForQuantity(Scanner input) {
-		System.out.println("Please input the number of tickets:");
+		System.out.println("Please input the number of tickets:(input 0 for reset)");
 		int amount = 0;
 		amount = input.nextInt();
-		while(!(amount>0)){
+		while (!(amount >= 0) || amount > 20) {
 			System.out.println("Invalid input. Please enter again.");
 			amount = input.nextInt();
 		}
-		System.out.println("You are going to buy "+amount+" tickets.");
+		if (amount == 0) {
+			promptInfo();
+			resetchecker = true;
+		}
+		System.out.println("You are going to buy " + amount + " tickets.");
 		return amount;
 	}
-	
-	public static int setMethod(int method)
-	{
-		if(method == 1)
-		{
+
+	public static int setMethod(int method) {
+		if (method == 1) {
 			paymentMethod = new Octopus();
 		}
-		
+
 		else
 			paymentMethod = new Cash();
-		
+
 		return method;
 	}
-	
-	public static int setQuantity(int quan)
-	{
+
+	public static int setQuantity(int quan) {
 		quantity = quan;
 		return quan;
 	}
-	
-	public static int setAgeGroup(int group)
-	{
-		if(group == 1)
-		{
+
+	public static int setAgeGroup(int group) {
+		if (group == 1) {
 			ageGroupClass = new Child();
 		}
-		
-		else if(group == 2)
-		{
+
+		else if (group == 2) {
 			ageGroupClass = new Student();
 		}
-		
-		else if(group == 3)
-		{
+
+		else if (group == 3) {
 			ageGroupClass = new Adult();
 		}
-		
-		else if(group == 4)
-		{
+
+		else if (group == 4) {
 			ageGroupClass = new Elderly();
 		}
-		
+
 		return group;
 	}
-	
-	public static int setStartCode(int startCode)
-	{
+
+	public static int setStartCode(int startCode) {
 		start = startCode;
 		return start;
 	}
-	
-	public static int setDestCode(int destCode)
-	{
+
+	public static int setDestCode(int destCode) {
 		dest = destCode;
 		return dest;
 	}
 
 	private static int askForAgeGroup(Scanner in) {
-		
+
 		int group = 1;
 		System.out.println("Please input your age group code: ");
 		System.out.printf("%10s%15s", "Code", "Age Group\n");
-		
+
 		System.out.printf("%10s%15s", "1", "Child\n");
 		System.out.printf("%10s%15s", "2", "Student\n");
 		System.out.printf("%10s%15s", "3", "Adult\n");
 		System.out.printf("%10s%15s", "4", "Elderly\n");
-		
+		System.out.printf("%10s%15s", "0", "Reset\n");
+
 		group = in.nextInt();
-		while (group<=0||group>4)
-		{
+		while (group < 0 || group > 4) {
 			System.out.println("Invalid age group, please enter again:");
 			group = in.nextInt();
-			
+
 		}
-		
-		if(group == 1)
-		{
+
+		if (group == 1) {
 			ageGroupClass = new Child();
 		}
-		
-		else if(group == 2)
-		{
+
+		else if (group == 2) {
 			ageGroupClass = new Student();
 		}
-		
-		else if(group == 3)
-		{
+
+		else if (group == 3) {
 			ageGroupClass = new Adult();
 		}
-		
-		else if(group == 4)
-		{
+
+		else if (group == 4) {
 			ageGroupClass = new Elderly();
+		} else if (group == 0) {
+			promptInfo();
+			resetchecker = true;
 		}
-		
 		return group;
 	}
 
@@ -261,54 +262,49 @@ public class fee {
 		float price = 0;
 		price = paymentMethod.getBasePrice(start, dest, quantity);
 		float discount = ageGroupClass.getDiscount();
-		
-		if(isSecond)
-		{
-			return (float) (price*discount*0.8);
+
+		if (isSecond) {
+			return (float) (price * discount * 0.8);
 		}
-		
-		else		
-			return (float) (price*discount);
+
+		else
+			return (float) (price * discount);
 	}
-	
-	public static int getAgeGroup()
-	{
+
+	public static int getAgeGroup() {
 		return ageGroup;
 	}
-	
-	public static int getQuantity()
-	{
+
+	public static int getQuantity() {
 		return quantity;
 	}
-	
-	public static int getMethod()
-	{
+
+	public static int getMethod() {
 		return method;
 	}
-	
-	public static boolean isSecondTrip(String id)
-	{
+
+	public static boolean isSecondTrip(String id) {
 		try {
-			
-			BufferedReader reader= new BufferedReader(new FileReader("data/record.csv"));
-			
+
+			BufferedReader reader = new BufferedReader(new FileReader("Railway Fee Calculation/data/record.csv"));
+
 			String row;
-			
-			while((row=reader.readLine())!=null)
-			{
-				if(row.equalsIgnoreCase(id))
-				{
+
+			while ((row = reader.readLine()) != null) {
+				if (row.equalsIgnoreCase(id)) {
+					System.out.println("The outopus is second trip");
 					return true;
 				}
 			}
 			
+			System.out.println("The outopus is not second trip");
 			return false;
-			
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
+
 }

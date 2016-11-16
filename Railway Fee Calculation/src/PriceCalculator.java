@@ -84,7 +84,7 @@ public class PriceCalculator {
 			
 			for(String s : fileName)
 			{
-				BufferedReader reader= new BufferedReader(new FileReader("data/" + s + "_line.csv")); //import csv file
+				BufferedReader reader= new BufferedReader(new FileReader("Railway Fee Calculation/data/" + s + "_line.csv")); //import csv file
 				
 				String row=reader.readLine(); //no line is read at first
 				Line line = new Line(s);
@@ -268,63 +268,6 @@ public class PriceCalculator {
 		return returnList;
 	}
 
-	public double finalCalculation(int ageGroup,int quantity,int octopusMethod,int startStation,int destStation){
-		double finalPrice=0;
-		double ageGroupDiscount;
-		double totalDistance;
-		ageGroupDiscount=getDiscountFromAge(ageGroup);
-		totalDistance=stationDistance(startStation,destStation);
-		double pricePerKM = 0;
-		
-		if(totalDistance<1.5 && totalDistance>0)
-			pricePerKM = 2;
-		else if(totalDistance > 1.5 && totalDistance < 8)
-			pricePerKM = 1.5;
-		else
-			pricePerKM = 0.6;
-		
-		if(octopusCechker(octopusMethod)){
-			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * 1;  
-		}
-		else
-			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * quantity;  
-
-		return finalPrice;
-	}
-	
-	/**
-	 * Use station is better, return the price
-	 * @param ageGroup
-	 * @param quantity
-	 * @param octopusMethod
-	 * @param startStation
-	 * @param destStation
-	 * @return
-	 */
-	public double finalCalculation(int ageGroup,int quantity,int octopusMethod,Station startStation,Station destStation){
-		double finalPrice=0;
-		double ageGroupDiscount;
-		double totalDistance;
-		ageGroupDiscount=getDiscountFromAge(ageGroup);
-		totalDistance=stationDistance(startStation,destStation,null);
-		double pricePerKM = 0;
-		
-		if(totalDistance<1.5 && totalDistance>0)
-			pricePerKM = 2;
-		else if(totalDistance > 1.5 && totalDistance < 8)
-			pricePerKM = 1.5;
-		else
-			pricePerKM = 0.6;
-		
-		if(octopusCechker(octopusMethod)){
-			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * 1;  
-		}
-		else
-			finalPrice = ageGroupDiscount * (totalDistance * pricePerKM) * quantity;  
-
-		return finalPrice;
-	}
-	
 	public void outputAllLine()
 	{
 		lc.outputAllLines();
