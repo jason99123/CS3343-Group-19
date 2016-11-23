@@ -124,9 +124,13 @@ public class PriceCalculator {
 	 */
 	public double stationDistance(int start,int dest)
 	{
-		Station startStation = lc.getStationByCode(start);
-		Station endStation = lc.getStationByCode(dest);
+		if(start == dest)
+		{
+			return 0;
+		}
 		
+		Station startStation = lc.getStationByCode(start);
+		Station endStation = lc.getStationByCode(dest);	
 		
 		return stationDistanceByObj(startStation,endStation,null);
 	}
