@@ -128,7 +128,7 @@ public class PriceCalculator {
 		Station endStation = lc.getStationByCode(dest);
 		
 		
-		return stationDistance(startStation,endStation,null);
+		return stationDistanceByObj(startStation,endStation,null);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class PriceCalculator {
 	 * @param exceptionList The list that will not be checked again
 	 * @return
 	 */
-	public double stationDistance(Station start,Station dest,ArrayList<Line> exceptionList){
+	public double stationDistanceByObj(Station start,Station dest,ArrayList<Line> exceptionList){
 		
 		double leftDistance = 1000;
 		double rightDistance = 1000;
@@ -187,7 +187,7 @@ public class PriceCalculator {
 					ArrayList<Line> passList = deepCoping(exceptionList);
 					passList.add(l);
 					double curDistance = l.getDistance(start, prevStation);
-					tmpLeft = stationDistance(prevStation,dest,passList) + curDistance;
+					tmpLeft = stationDistanceByObj(prevStation,dest,passList) + curDistance;
 					// May have a chance to check more than 1 line
 					leftDistance = (tmpLeft < leftDistance)?tmpLeft:leftDistance;
 					
@@ -210,7 +210,7 @@ public class PriceCalculator {
 					ArrayList<Line> passList = deepCoping(exceptionList);
 					passList.add(l);
 					double curDistance = l.getDistance(start, nextStation);
-					tmpRight = stationDistance(nextStation,dest,passList) + curDistance;
+					tmpRight = stationDistanceByObj(nextStation,dest,passList) + curDistance;
 					// May have a chance to check more than 1 line
 					rightDistance = (tmpRight < rightDistance)?tmpRight:rightDistance;
 				}

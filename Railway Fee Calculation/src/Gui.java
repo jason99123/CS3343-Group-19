@@ -107,7 +107,7 @@ public class Gui {
         {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double distance = pc.stationDistance(start,dest,null);
+				double distance = pc.stationDistanceByObj(start,dest,null);
 				int quantity = fee.setQuantity(jc.getSelectedIndex()+1);
 				int paymentMethod = fee.setMethod(jc2.getSelectedIndex()+1);
 				int ageGroup = fee.setAgeGroup(jc3.getSelectedIndex()+1);
