@@ -84,7 +84,7 @@ public class PriceCalculator {
 			
 			for(String s : fileName)
 			{
-				BufferedReader reader= new BufferedReader(new FileReader("Railway Fee Calculation/data/" + s + "_line.csv")); //import csv file
+				BufferedReader reader= new BufferedReader(new FileReader("data/" + s + "_line.csv")); //import csv file
 				
 				String row=reader.readLine(); //no line is read at first
 				Line line = new Line(s);

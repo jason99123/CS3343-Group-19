@@ -95,6 +95,46 @@ public class fee {
 			calculator.outputAllLineInStation(userInput);
 			System.out.println("Please input Destination Station: (input 0 for reset)");
 			dest = input.nextInt();
+			
+			if(userInput == 1)
+			{
+				while(dest > 17 || dest <= 0)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Destination Station:");
+					dest = input.nextInt();
+				}
+			}
+			
+			else if(userInput == 2)
+			{
+				while(dest < 18 || dest > 34)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Destination Station:");
+					dest = input.nextInt();
+				}
+			}
+			
+			else if(userInput == 3)
+			{
+				while(dest < 35 || dest > 42)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Destination Station:");
+					dest = input.nextInt();
+				}
+			}
+			
+			else if(userInput == 4)
+			{
+				while(dest < 43 || dest > 58)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Destination Station:");
+					dest = input.nextInt();
+				}
+			}
 		}
 		if (userInput != 0)
 			System.out
@@ -123,6 +163,46 @@ public class fee {
 			calculator.outputAllLineInStation(userInput);
 			System.out.println("Please input Starting Station:");
 			start = input.nextInt();
+			
+			if(userInput == 1)
+			{
+				while(start > 17 || start <= 0)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Starting Station:");
+					start = input.nextInt();
+				}
+			}
+			
+			else if(userInput == 2)
+			{
+				while(start < 18 || start > 34)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Starting Station:");
+					start = input.nextInt();
+				}
+			}
+			
+			else if(userInput == 3)
+			{
+				while(start < 35 || start > 42)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Starting Station:");
+					start = input.nextInt();
+				}
+			}
+			
+			else if(userInput == 4)
+			{
+				while(start < 43 || start > 58)
+				{
+					System.out.println("Wrong input, please enter again");
+					System.out.println("Please input Starting Station:");
+					start = input.nextInt();
+				}
+			}
 		}
 		if (userInput != 0)
 			System.out.println("You have chosen " + lc.getStationByCode(start).getStation() + " as starting station.");
